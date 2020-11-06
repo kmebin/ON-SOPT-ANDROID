@@ -6,6 +6,8 @@
 
 * [2주차 과제](#memo-2주차-과제-2020-10-29)
 
+* [3주차 과제](#memo-3주차-과제-2020-11-06)
+
 </br>
 
 ## :memo: 1주차 과제 (2020-10-16 / 2020-10-21)
@@ -44,9 +46,9 @@
 
 > LoginActivity.kt
 
-• 회원가입 버튼을 클릭했을 때, LoginActivity에서 SignUpActivity로 이동합니다.
+* 회원가입 버튼을 클릭했을 때, LoginActivity에서 SignUpActivity로 이동합니다.
 
-• SignUpActivity가 종료되면서 데이터를 받아오기 위해 **startActivityForResult**()를 사용했습니다.
+* SignUpActivity가 종료되면서 데이터를 받아오기 위해 `startActivityForResult()`를 사용했습니다.
 
 ```Kotlin
 btn_sign_up.setOnClickListener {
@@ -60,11 +62,11 @@ btn_sign_up.setOnClickListener {
 
 > SignUpActivity.kt
 
-• 회원가입 버튼을 클릭했을 때, EditTextView에 값이 하나라도 없을 경우 "빈칸이 있습니다."라는 **ToastMessage**를 띄웁니다.
+* 회원가입 버튼을 클릭했을 때, EditTextView에 값이 하나라도 없을 경우 "빈칸이 있습니다."라는 **ToastMessage**를 띄웁니다.
 
-• 회원가입 버튼을 클릭했을 때, 모든 EditTextView에 값이 있는 경우 "회원가입이 완료되었습니다."라는 **ToastMessage**를 띄우고, Id와 Password 값을 넣어줍니다.
+* 회원가입 버튼을 클릭했을 때, 모든 EditTextView에 값이 있는 경우 "회원가입이 완료되었습니다."라는 **ToastMessage**를 띄우고, Id와 Password 값을 넣어줍니다.
 
-• **setResult**()로 값을 설정해주고, **finish**()로 현재 액티비티를 종료한 후 LoginActivity로 돌아옵니다.
+* `setResult()`로 값을 설정해주고, `finish()`로 현재 액티비티를 종료한 후 LoginActivity로 돌아옵니다.
 
 ```Kotlin
 btn_sign_up.setOnClickListener {
@@ -91,9 +93,9 @@ btn_sign_up.setOnClickListener {
 
 > LoginActivity.kt
 
-• LoginActivity로 돌아오면서 **onActivityResult**()가 실행됩니다.
+* LoginActivity로 돌아오면서 `onActivityResult()`가 실행됩니다.
 
-• 회원가입 화면에서 입력했던 아이디와 비밀번호를 받아와 로그인 화면에 입력되어 있게 합니다.
+* 회원가입 화면에서 입력했던 아이디와 비밀번호를 받아와 로그인 화면에 입력되어 있게 합니다.
 
 ```Kotlin
 override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -114,21 +116,22 @@ override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) 
 
 > LoginActivity.kt
 
-• **SharedPreferences**()는 **Map** 형태로 간단한 값을 저장할 수 있습니다.
+* `SharedPreferences()`는 **Map** 형태로 간단한 값을 저장할 수 있습니다.
 
-• **SharedPreferences.Editor**는 SharedPreferences 개체의 값을 수정하는데 사용되는 인터페이스입니다.
+* **SharedPreferences.Editor**는 SharedPreferences 개체의 값을 수정하는데 사용되는 인터페이스입니다.
 
 ```Kotlin
 val sharedPref: SharedPreferences = getSharedPreferences("pref", Context.MODE_PRIVATE)
 val sharedEdit = sharedPref.edit()
 ```
+
 </br>
 
-• 로그인 버튼을 클릭했을 때, "반갑습니다."라는 ToastMessage를 띄우고 HomeActivity로 이동합니다.
+* 로그인 버튼을 클릭했을 때, "반갑습니다."라는 ToastMessage를 띄우고 HomeActivity로 이동합니다.
 
-• Editor 객체에 **putString**()을 통해 Map 형태로 데이터를 저장합니다.
+* Editor 객체에 `putString()`을 통해 Map 형태로 데이터를 저장합니다.
 
-• 반드시 **apply**() 또는 **commit**()을 해줍니다.
+* 반드시 `apply()` 또는 `commit()`을 해줍니다.
 
 ```Kotlin
 btn_login.setOnClickListener {
@@ -142,9 +145,10 @@ btn_login.setOnClickListener {
     startActivity(intent)
 }
 ```
+
 </br>
 
-• **getString**()을 통해 해당 Key 값을 가진 string을 가져옵니다. 존재하지 않는다면 default 값을 가져옵니다.
+* `getString()`을 통해 해당 Key 값을 가진 string을 가져옵니다. 존재하지 않는다면 default 값을 가져옵니다.
 
 ```Kotlin
 var idValue = sharedPref.getString("Id", "")
@@ -156,9 +160,9 @@ editText_pw.setText(pwValue)
 
 </br>
 
-• SharedPreferences 안에 값이 저장되어 있다면, 자동 로그인 되었다는 ToastMessage를 띄우고 HomeActivity로 이동합니다.
+* SharedPreferences 안에 값이 저장되어 있다면, 자동 로그인 되었다는 ToastMessage를 띄우고 HomeActivity로 이동합니다.
 
-• 앱을 재시작했을 때 자동 로그인이 됩니다.
+* 앱을 재시작했을 때 자동 로그인이 됩니다.
 
 ```Kotlin
 if (idValue.toString().isNotBlank() && pwValue.toString().isNotBlank()) {
@@ -203,7 +207,7 @@ if (idValue.toString().isNotBlank() && pwValue.toString().isNotBlank()) {
 
 > ProfileData.kt
 
-• 아이템에 대한 데이터 객체를 만들기 위해 **data class**를 생성합니다.
+* 아이템에 대한 데이터 객체를 만들기 위해 **data class**를 생성합니다.
 
 ```Kotlin
 data class ProfileData(
@@ -217,9 +221,9 @@ data class ProfileData(
 
 > ProfileViewHolder.kt
 
-• **Adapter**에서 전달받은 데이터를 layout에 넣어줍니다. 이를 **Bind**한다고 표현합니다.
+* **Adapter**에서 전달받은 데이터를 layout에 넣어줍니다. 이를 **Bind**한다고 표현합니다.
 
-• **onBind**()는 Adapter에서 호출되고, 실질적으로 데이터를 요소들에 넣어주는 함수입니다.
+* `onBind()`는 Adapter에서 호출되고, 실질적으로 데이터를 요소들에 넣어주는 메소드입니다.
 
 ```Kotlin
 class ProfileViewHolder (itemView : View) : RecyclerView.ViewHolder(itemView){
@@ -238,9 +242,9 @@ class ProfileViewHolder (itemView : View) : RecyclerView.ViewHolder(itemView){
 
 > ProfileAdapter.kt
 
-• **Adapter**에는 **onCreateViewHolder**(), **getItemCount**(), **onBindViewHolder** 3가지 메소드를 반드시 오버라이드 해줘야 합니다.
+* **Adapter**에는 `onCreateViewHolder()`, `getItemCount()`, `onBindViewHolder()` 3가지 메소드를 반드시 오버라이드 해줘야 합니다.
 
-• setOnClickListener를 통해 아이템을 클릭하면 상세 화면으로 이동하게 했습니다.
+* setOnClickListener를 통해 아이템을 클릭하면 상세 화면으로 이동하게 했습니다.
 
 ```Kotlin
 override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProfileViewHolder {
@@ -275,9 +279,9 @@ override fun onBindViewHolder(holder: ProfileViewHolder, position: Int) {
 
 > ProfileActivity.kt
 
-• 우선 RecyclerView의 배치 방향을 **LinearLayoutManager**로 설정하였습니다.
+* 우선 RecyclerView의 배치 방향을 **LinearLayoutManager**로 설정하였습니다.
 
-• **profileAdapter**에 리스트로 보여줄 데이터들을 넣어줍니다.
+* **profileAdapter**에 리스트로 보여줄 데이터들을 넣어줍니다.
 
 ```kotlin
 override fun onCreate(savedInstanceState: Bundle?) {
@@ -304,7 +308,7 @@ override fun onCreate(savedInstanceState: Bundle?) {
 
 </br>
 
-• **Option Menu**를 사용해서 RecyclerView의 Layout을 변경할 수 있게 했습니다.
+* **Option Menu**를 사용해서 RecyclerView의 Layout을 변경할 수 있게 했습니다.
 
 ```kotlin
 override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -339,9 +343,9 @@ override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
 > ItemTouchHelper.kt
 
-• **ItemTouchHelper** 클래스를 사용하여 아이템을 drag&drop하고 swipe하는 것을 구현할 수 있습니다.
+* **ItemTouchHelper** 클래스를 사용하여 아이템을 drag&drop하고 swipe하는 것을 구현할 수 있습니다.
 
-• **SimpleCallback**() 함수에 drag와 swipe할 방향을 각각 설정해 줍니다.
+* `SimpleCallback()` 에 drag와 swipe할 방향을 각각 설정해 줍니다.
 
 ```kotlin
 val helper = ItemTouchHelper(object :
@@ -352,7 +356,7 @@ val helper = ItemTouchHelper(object :
 
 </br>
 
-• drag할 아이템의 위치와 drop할 아이템의 위치를 **notifyItemMoved**() 함수에 전달하여 이동시킬 수 있습니다.
+* drag할 아이템의 위치와 drop할 아이템의 위치를 `notifyItemMoved()` 메소드에 전달하여 이동시킬 수 있습니다.
 
 ```kotlin
 override fun onMove(
@@ -369,11 +373,181 @@ override fun onMove(
 
 </br>
 
-• swipe를 통해 제거할 아이템의 위치를 **notifyItemRemoved**() 함수에 전달하여 삭제할 수 있습니다.
+* swipe를 통해 제거할 아이템의 위치를 `notifyItemRemoved()` 에 전달하여 삭제할 수 있습니다.
 
 ```kotlin
 override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
     adapter.data.removeAt(viewHolder.adapterPosition)
     adapter.notifyItemRemoved(viewHolder.adapterPosition)
+}
+```
+
+</br></br>
+
+## :memo: 3주차 과제 (2020-11-06)
+
+> :computer: **필수 과제 (2020-11-06)**
+
+<img width="300" alt="move" src="https://user-images.githubusercontent.com/72112845/98333766-cd59a000-2044-11eb-834d-7660b05392e9.gif"> 
+
+* **전체 화면** : ViewPager + BottomNavigation
+
+* **ViewPager** : 프로필 화면(HomeFragment) - 리사이클러뷰 화면(ProfileFragment) - 비어있는 화면(SettingsFragment)
+
+* **프로필 화면(HomeFragment)** : TabLayout + ChildFragment(HomeInfoFragment - HomeOtherFragment)
+
+</br>
+
+## :memo: 코드 설명
+
+:bulb: **ViewPager + BottomNavigation**
+
+> MainPagerAdapter.kt
+
+* **ViewPager**도 RecylerView와 같이 입력받은 데이터 리스트를 화면에 배치하기 위한 **Adapter** 구현이 필요합니다.
+
+* `getItem()`에 보여줄 3개의 Fragment를 지정합니다.
+
+```kotlin
+class MainPagerAdapter(fm: FragmentManager)
+    : FragmentStatePagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+
+    var fragments = listOf<Fragment>()
+
+    override fun getItem(position: Int): Fragment = when(position){
+        0 -> HomeFragment()
+        1 -> ProfileFragment()
+        2 -> SettingsFragment()
+        else -> throw IllegalStateException("Unexpected position $position")
+    }
+
+    override fun getCount(): Int = 3
+}
+```
+
+</br>
+
+> MainActivity.kt
+
+* `onCreate()`에서 ViewPager에 선언한 Adapter를 장착합니다.
+
+* `onStart()`에서 2가지 리스너들을 설정해 주었습니다.
+
+```kotlin
+class MainActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        vp_main.adapter = MainPagerAdapter(supportFragmentManager)
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        vp_main.addViewPagerListener(bottom_navi)
+        bottom_navi.setBottomNavigationListener(vp_main)
+    }
+}
+```
+
+</br>
+
+> addViewPagerListener.kt
+
+* ViewPager의 **화면 전환**을 감지하는 리스너입니다.
+
+```kotlin
+fun ViewPager.addViewPagerListener(bottomNavigationView: BottomNavigationView) {
+    this.addOnPageChangeListener(object : ViewPager.OnPageChangeListener{
+
+        override fun onPageScrollStateChanged(state: Int) {}
+
+        override fun onPageScrolled(
+            position: Int,
+            positionOffset: Float,
+            positionOffsetPixels: Int
+        ) {}
+
+        override fun onPageSelected(position: Int) {
+            bottomNavigationView.menu.getItem(position).isChecked = true
+        }
+    })
+}
+```
+
+</br>
+
+> setBottomNavigationListener.kt
+
+* BottomNavigation을 **세팅**하는 리스너입니다.
+
+* 각 메뉴를 선택했을 때 ViewPager의 해당 Fragment로 화면이 전환됩니다.
+
+```kotlin
+fun BottomNavigationView.setBottomNavigationListener(viewPager: ViewPager) {
+    this.setOnNavigationItemSelectedListener {
+        when(it.itemId) {
+            R.id.menu_profile -> viewPager.currentItem = 0
+            R.id.menu_recycler -> viewPager.currentItem = 1
+            R.id.menu_settings -> viewPager.currentItem = 2
+        }
+        true
+    }
+}
+```
+
+</br>
+
+:bulb: **HomeFragment + TabLayout**
+
+> HomeFragment.kt
+
+* Fragment는 `onCreateView()`가 Activity에서의 onCreate() 역할을 합니다.
+
+```kotlin
+class HomeFragment : Fragment() {
+
+    private lateinit var homeViewPagerAdapter: HomeViewPagerAdapter
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val view = inflater.inflate(R.layout.fragment_home, container, false)
+
+        return view
+    }
+    
+    ...
+
+}    
+```
+
+</br>
+
+* `onViewCreated()`에서는 onCreateView()에서 return해 준 View들을 가지고 다룰 수 있습니다.
+
+* `setupWithViewPager()`로 **TabLayout**과 ViewPager를 연동합니다.
+
+* 탭 아이템의 title을 설정하는 `getTabAt()`는 반드시 연동 후에 작성해야 합니다.
+
+```kotlin
+class HomeFragment : Fragment() {
+    
+    ...
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        homeViewPagerAdapter = HomeViewPagerAdapter(childFragmentManager)
+        vp_home.adapter = homeViewPagerAdapter
+
+        tl_home.setupWithViewPager(vp_home)
+        tl_home.apply {
+            getTabAt(0)?.text = "INFO"
+            getTabAt(1)?.text = "OTHER"
+        }
+        super.onViewCreated(view, savedInstanceState)
+    }
 }
 ```
