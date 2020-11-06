@@ -400,13 +400,17 @@ override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
 
 ## :memo: 코드 설명
 
-:bulb: **ViewPager + BottomNavigation**
+:bulb: **ViewPager**
 
 > MainPagerAdapter.kt
 
 * **ViewPager**도 RecylerView와 같이 입력받은 데이터 리스트를 화면에 배치하기 위한 **Adapter** 구현이 필요합니다.
 
-* `getItem()`에 보여줄 3개의 Fragment를 지정합니다.
+* **ViewPagerAdapter** 역할을 하기 위해 `FragmentStatePagerAdapter`를 상속받습니다. 보여지는 화면 기준 양 옆의 프래그먼트를 제외한 나머지를 완전히 파괴하는 방식을 사용하기 때문에 메모리 누수 관리에 효과적입니다.
+
+* `getItem()`에 ViewPager의 각 position에서 보여줄 프래그먼트들을 지정합니다.
+
+* `getCount()`는 Adapter에서 만들 페이지 수를 반환합니다.
 
 ```kotlin
 class MainPagerAdapter(fm: FragmentManager)
@@ -431,8 +435,6 @@ class MainPagerAdapter(fm: FragmentManager)
 
 * `onCreate()`에서 ViewPager에 선언한 Adapter를 장착합니다.
 
-* `onStart()`에서 2가지 리스너들을 설정해 주었습니다.
-
 ```kotlin
 class MainActivity : AppCompatActivity() {
 
@@ -442,7 +444,76 @@ class MainActivity : AppCompatActivity() {
 
         vp_main.adapter = MainPagerAdapter(supportFragmentManager)
     }
+    
+    ...
+}
+```
 
+</br>
+
+:bulb: **BottomNavigation**
+
+> bottom_navi_menu.xml
+
+* 하단 탭의 메뉴 아이템을 생성할 xml 파일을 만들어 줍니다.
+
+```xml
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_profile"
+        android:icon="@drawable/ic_baseline_home"
+        android:title="Profile"/>
+    <item
+        android:id="@+id/menu_recycler"
+        android:icon="@drawable/ic_baseline_list"
+        android:title="List"/>
+    <item
+        android:id="@+id/menu_settings"
+        android:icon="@drawable/ic_baseline_settings"
+        android:title="Settings"/>
+</menu>
+```
+
+</br>
+
+> bottom_navi_color.xml
+
+* 하단 탭의 메뉴 아이템의 아이콘 색상을 설정할 xml 파일을 만들어 줍니다.
+
+```xml
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:color="#FFC107" android:state_checked="true"/>
+    <item android:color="#9E9E9E" android:state_checked="false"/>
+</selector>
+```
+
+</br>
+
+> activity_main.xml
+
+* 하단 탭을 배치할 xml 파일에 **BottomNavigationView**를 추가합니다.
+
+* `app:menu=`에 생성한 메뉴 xml 파일을 넣어줍니다.
+
+```xml
+<com.google.android.material.bottomnavigation.BottomNavigationView
+    ...
+    app:itemIconTint="@color/bottom_navi_color"
+    app:itemRippleColor="#F3EBAB"
+    app:itemTextColor="@color/bottom_navi_color"
+    app:menu="@menu/bottom_navi_menu"/>
+```
+
+</br>
+
+> MainActivity.kt 
+
+* `onStart()`에서 `addViewPagerListener`와 `setBottomNavigationListener`를 호출합니다.
+
+```kotlin
+class MainActivity : AppCompatActivity() {
+    ...
+    
     override fun onStart() {
         super.onStart()
 
@@ -456,7 +527,11 @@ class MainActivity : AppCompatActivity() {
 
 > addViewPagerListener.kt
 
-* ViewPager의 **화면 전환**을 감지하는 리스너입니다.
+* BottomNavigation을 ViewPager와 연동하기 위해서는 **페이지 변경에 관한 리스너**가 필요합니다.
+
+* `onPageScrollStateChanged()`, `onPageScrolled()` : 화면 전환을 감지하는 리스너입니다.
+
+* `onPageSelected`: ViewPager의 페이지 중 하나가 선택된 경우 그에 대응되는 하단 탭의 상태를 변경합니다.
 
 ```kotlin
 fun ViewPager.addViewPagerListener(bottomNavigationView: BottomNavigationView) {
@@ -483,7 +558,9 @@ fun ViewPager.addViewPagerListener(bottomNavigationView: BottomNavigationView) {
 
 * BottomNavigation을 **세팅**하는 리스너입니다.
 
-* 각 메뉴를 선택했을 때 ViewPager의 해당 Fragment로 화면이 전환됩니다.
+* `setOnNavigationItemSelectedListener` : 각 탭을 클릭했을 때 이벤트를 처리하는 리스너입니다.
+
+* 각 탭을 선택했을 때 ViewPager의 해당 페이지로 화면이 전환됩니다.
 
 ```kotlin
 fun BottomNavigationView.setBottomNavigationListener(viewPager: ViewPager) {
