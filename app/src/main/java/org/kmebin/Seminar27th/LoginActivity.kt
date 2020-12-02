@@ -28,12 +28,11 @@ class LoginActivity : AppCompatActivity() {
 
         val idValue = sharedPref.getString("email", "")
         val pwValue = sharedPref.getString("password", "")
-        val nameValue = sharedPref.getString("userName", "")
         editText_id.setText(idValue)
         editText_pw.setText(pwValue)
 
         if (idValue.toString().isNotBlank() && pwValue.toString().isNotBlank()) {
-            Toast.makeText(this, "${nameValue.toString()}님 자동 로그인 되었습니다.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "자동 로그인 되었습니다.", Toast.LENGTH_SHORT).show()
 
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
@@ -66,8 +65,9 @@ class LoginActivity : AppCompatActivity() {
                 }
             })
 
-            sharedEdit.putString("Id", editText_id.text.toString())
-            sharedEdit.putString("Password", editText_pw.text.toString())
+            // SharedPreferences에 데이터 저장
+            sharedEdit.putString("email", editText_id.text.toString())
+            sharedEdit.putString("password", editText_pw.text.toString())
             sharedEdit.apply()
 
             val intent = Intent(this, MainActivity::class.java)

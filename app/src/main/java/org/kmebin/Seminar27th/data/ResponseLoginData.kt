@@ -1,12 +1,12 @@
 package org.kmebin.Seminar27th.data
 
-data class ResponseLoginData (
+data class ResponseLoginData(
     val status : Int,
     val success : Boolean,
-    val data : Data,
-    val message : String
+    val message : String,
+    val data : LoginData
 ) {
-    data class Data(
+    data class LoginData(
         val email : String,
         val password : String,
         val userName : String

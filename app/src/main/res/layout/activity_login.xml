@@ -12,7 +12,7 @@
         android:id="@+id/imageView2"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="130dp"
+        android:layout_marginTop="106dp"
         app:layout_constraintWidth_percent="0.47"
         app:layout_constraintDimensionRatio="172:64"
         app:layout_constraintEnd_toEndOf="parent"
