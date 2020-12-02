@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import org.kmebin.Seminar27th.ProfileDetailActivity
 import org.kmebin.Seminar27th.R
+import org.kmebin.Seminar27th.data.ProfileData
 
 class ProfileAdapter (private val context : Context) : androidx.recyclerview.widget.RecyclerView.Adapter<ProfileViewHolder>(){
     var data = mutableListOf<ProfileData>()

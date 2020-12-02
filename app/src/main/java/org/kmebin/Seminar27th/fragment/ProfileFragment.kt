@@ -6,8 +6,8 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.ItemTouchHelper
 import kotlinx.android.synthetic.main.fragment_recycler.*
 import org.kmebin.Seminar27th.R
+import org.kmebin.Seminar27th.data.ProfileData
 import org.kmebin.Seminar27th.recycler.ProfileAdapter
-import org.kmebin.Seminar27th.recycler.ProfileData
 import org.kmebin.Seminar27th.util.itemTouchHelper
 
 class ProfileFragment : Fragment() {

@@ -8,6 +8,14 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_login.*
+import okhttp3.ResponseBody
+import org.json.JSONObject
+import org.kmebin.Seminar27th.api.SoptServiceImpl
+import org.kmebin.Seminar27th.data.RequestLoginData
+import org.kmebin.Seminar27th.data.ResponseLoginData
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class LoginActivity : AppCompatActivity() {
 
@@ -18,20 +26,45 @@ class LoginActivity : AppCompatActivity() {
         val sharedPref: SharedPreferences = getSharedPreferences("pref", Context.MODE_PRIVATE)
         val sharedEdit = sharedPref.edit()
 
-        val idValue = sharedPref.getString("Id", "")
-        val pwValue = sharedPref.getString("Password", "")
+        val idValue = sharedPref.getString("email", "")
+        val pwValue = sharedPref.getString("password", "")
+        val nameValue = sharedPref.getString("userName", "")
         editText_id.setText(idValue)
         editText_pw.setText(pwValue)
 
         if (idValue.toString().isNotBlank() && pwValue.toString().isNotBlank()) {
-            Toast.makeText(this, "${idValue.toString()}님 자동 로그인 되었습니다.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "${nameValue.toString()}님 자동 로그인 되었습니다.", Toast.LENGTH_SHORT).show()
 
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
 
         btn_login.setOnClickListener {
-            Toast.makeText(this, "반갑습니다.", Toast.LENGTH_SHORT).show()
+            val email = editText_id.text.toString()
+            val password = editText_pw.text.toString()
+
+            // 로그인 통신
+            val call : Call<ResponseLoginData> = SoptServiceImpl.service.postLogin(
+                    RequestLoginData(email = email, password = password)
+            )
+            call.enqueue(object : Callback<ResponseLoginData> {
+                override fun onFailure(call: Call<ResponseLoginData>, t: Throwable) {
+                }
+
+                override fun onResponse(
+                        call: Call<ResponseLoginData>,
+                        response: Response<ResponseLoginData>
+                ) {
+                    response.takeIf { it.isSuccessful }
+                            ?.body()
+                            ?.let {
+                                it.data.let{data ->
+                                    Toast.makeText(this@LoginActivity, "${data.userName}님 환영합니다.", Toast.LENGTH_SHORT).show()
+                                }
+                                it.data.email
+                            } ?: showError(response.errorBody())
+                }
+            })
 
             sharedEdit.putString("Id", editText_id.text.toString())
             sharedEdit.putString("Password", editText_pw.text.toString())
@@ -41,7 +74,7 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        btn_sign_up.setOnClickListener {
+        tv_sign_up.setOnClickListener {
             val intent = Intent(this, SignUpActivity::class.java)
             startActivityForResult(intent, 111)
         }
@@ -57,5 +90,11 @@ class LoginActivity : AppCompatActivity() {
             editText_id.setText(userId)
             editText_pw.setText(userPw)
         }
+    }
+
+    private fun showError(error : ResponseBody?) {
+        val e = error ?: return
+        val ob = JSONObject(e.string())
+        Toast.makeText(this, ob.getString("message"), Toast.LENGTH_LONG).show()
     }
 }

@@ -1,4 +1,4 @@
-package org.kmebin.Seminar27th.recycler
+package org.kmebin.Seminar27th.data
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize

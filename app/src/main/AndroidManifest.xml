@@ -2,7 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.kmebin.Seminar27th">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
+        android:usesCleartextTraffic="true"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -12,7 +15,6 @@
         <activity android:name="org.kmebin.Seminar27th.SignUpActivity"></activity>
         <activity android:name="org.kmebin.Seminar27th.MainActivity" />
         <activity android:name="org.kmebin.Seminar27th.ProfileDetailActivity" />
-        <activity android:name=".MainPagerActivity" />
         <activity android:name="org.kmebin.Seminar27th.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
