@@ -8,17 +8,19 @@
 
 * [3주차 과제](#memo-3주차-과제-2020-11-06)
 
+* [6주차 과제](#memo-6주차-과제-2020-12-03)
+
 </br>
 
 ## :memo: 1주차 과제 (2020-10-16 / 2020-10-21)
 
 > :computer: **필수 과제 (2020-10-16)**
 
-• 로그인 화면
+* 로그인 화면
 
 <img width="300" alt="login" src="https://user-images.githubusercontent.com/72112845/97577084-4dbf4600-1a32-11eb-9f92-00ede1f8110d.png">
 
-• 빈칸이 있는 경우 회원가입 화면
+* 빈칸이 있는 경우 회원가입 화면
 
 <img width="300" alt="signup" src="https://user-images.githubusercontent.com/72112845/97577223-7a735d80-1a32-11eb-9e5f-0ceeb0768f21.png">
 
@@ -26,7 +28,7 @@
 
 > :computer: **성장 과제 1 (2020-10-16)**
 
-• 회원가입 완료 후 이전 로그인 화면으로 돌아오기
+* 회원가입 완료 후 이전 로그인 화면으로 돌아오기
 
 <img width="300" alt="login2" src="https://user-images.githubusercontent.com/72112845/97577308-98d95900-1a32-11eb-8d94-a09a536a7684.png">
 
@@ -34,7 +36,7 @@
 
 > :computer: **성장 과제 2 (2020-10-21)**
 
-• 자동 로그인 화면
+* 자동 로그인 화면
 
 <img width="300" alt="login3" src="https://user-images.githubusercontent.com/72112845/96689940-0693de00-13be-11eb-9ad2-00b8feb97899.png"> <img width="300" alt="login4" src="https://user-images.githubusercontent.com/72112845/96690099-3ba03080-13be-11eb-8fe3-ee089d21550c.png">
 
@@ -179,7 +181,7 @@ if (idValue.toString().isNotBlank() && pwValue.toString().isNotBlank()) {
 
 > :computer: **필수 과제 (2020-10-29)**
 
-• 로그인했을 때의 화면과 각 아이템을 클릭했을 때의 상세 화면
+* 로그인했을 때의 화면과 각 아이템을 클릭했을 때의 상세 화면
 
 <img width="300" alt="recyclerview" src="https://user-images.githubusercontent.com/72112845/97457743-628dd200-197d-11eb-90b6-f3292c56c93b.png"> <img width="300" alt="detail" src="https://user-images.githubusercontent.com/72112845/97457866-7f2a0a00-197d-11eb-84eb-6a68f558011e.png">
 
@@ -187,7 +189,7 @@ if (idValue.toString().isNotBlank() && pwValue.toString().isNotBlank()) {
 
 > :computer: **성장 과제 1 (2020-10-29)**
 
-• 격자 형태(GridLayout)로 바뀐 화면
+* 격자 형태(GridLayout)로 바뀐 화면
 
 <img width="300" alt="gridLayout" src="https://user-images.githubusercontent.com/72112845/97452444-18562200-1978-11eb-9646-a67659795137.png">
 
@@ -195,7 +197,7 @@ if (idValue.toString().isNotBlank() && pwValue.toString().isNotBlank()) {
 
 > :computer: **성장 과제 2 (2020-10-29)**
 
-• 아이템 이동 및 삭제 화면
+* 아이템 이동 및 삭제 화면
 
 <img width="300" alt="move" src="https://user-images.githubusercontent.com/72112845/97577631-04bbc180-1a33-11eb-9602-ae5fd23a414a.gif"> <img width="300" alt="remove" src="https://user-images.githubusercontent.com/72112845/97577814-4187b880-1a33-11eb-92e7-491b7eb2d58e.gif">
 
@@ -627,4 +629,160 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
     }
 }
+```
+
+</br></br>
+
+## :memo: 6주차 과제 (2020-12-03)
+
+> :computer: **필수 과제 (2020-12-03)**
+
+* 회원가입/로그인 완료 화면
+
+<img width="300" alt="signup_gif" src="https://user-images.githubusercontent.com/72112845/100918624-0f7ae200-351c-11eb-9a93-448c010d2b4e.gif">  <img width="300" alt="login_gif" src="https://user-images.githubusercontent.com/72112845/100918835-57016e00-351c-11eb-8315-7dc81824a1d1.gif">
+
+* POSTMAN 테스트
+
+<img width="800" alt="login_img" src="https://user-images.githubusercontent.com/72112845/100919408-1bb36f00-351d-11eb-9784-4b2cc64835f1.JPG">
+<img width="800" alt="login_img" src="https://user-images.githubusercontent.com/72112845/100919481-338af300-351d-11eb-871c-44302317c549.JPG">
+
+</br>
+
+## :memo: 코드 설명
+
+:bulb: **Retrofit2**
+
+> SoptService.kt
+
+* 식별 URL을 **Interface**로 설계합니다.
+
+* Http method 종류가 **POST** 이므로, `@Body` 를 통해 **RequestBody**를 설정하고, return 값으로는 **Response 객체**를 주었습니다.
+
+```kotlin
+interface SoptService {
+    // 회원가입
+    @Headers("Content-Type: application/json")
+    @POST("/users/signup")
+    fun postSignUp(
+            @Body body: RequestSignUpData
+    ) : Call<ResponseSignUpData>
+
+    // 로그인
+    @Headers("Content-Type: application/json")
+    @POST("/users/signin")
+    fun postLogin(
+        @Body body : RequestLoginData
+    ) : Call<ResponseLoginData>
+}
+```
+
+</br>
+
+> RequestSignUpData.kt
+
+* 회원가입 Request 객체를 생성합니다.
+
+```kotlin
+data class RequestSignUpData(
+    val email : String,
+    val password : String,
+    val userName : String
+)
+```
+</br>
+> RequestLoginData.kt 
+
+* 로그인 Request 객체를 생성합니다.
+
+```kotlin
+data class RequestLoginData(
+    val email : String,
+    val password : String
+)
+```
+</br>
+> ResponseSignUpData.kt 
+
+* 회원가입 Response 객체를 생성합니다.
+
+```kotlin
+data class ResponseSignUpData(
+    val status : Int,
+    val success : Boolean,
+    val message : String,
+    val data : SignUpData
+) {
+    data class SignUpData(
+        val email : String,
+        val password : String,
+        val userName : String
+    )
+}
+```
+</br>
+> ResponseLoginData.kt
+
+* 로그인 Response 객체를 생성합니다.
+
+```kotlin
+data class ResponseLoginData(
+    val status : Int,
+    val success : Boolean,
+    val message : String,
+    val data : LoginData,    
+) {
+    data class LoginData(
+        val email : String,
+        val password : String,
+        val userName : String
+    )
+}
+```
+</br>
+> SoptServiceImpl.kt
+
+* Retrofit Interface의 **실제 구현체**는 하나만 생성하여 프로젝트 어디서나 사용할 수 있도록 **싱글톤**으로 만들어줍니다.
+* 싱글톤 객체로 사용하기 위해 `object`로 선언합니다.
+* 메인 서버 URL을 담을 변수 `BASE_URL`을 생성해 줍니다.
+* Retrofit 객체 `retrofit`을 생성해 줍니다.
+* **Interface 객체**를 넘겨 실제 구현체를 생성해 줍니다.
+
+```kotlin
+object SoptServiceImpl {
+    private const val BASE_URL = "http://15.164.83.210:3000"
+
+    private val retrofit : Retrofit = Retrofit.Builder()
+        .baseUrl(BASE_URL)
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
+
+    val service : SoptService = retrofit.create(SoptService::class.java)
+}
+```
+</br>
+> SignUpActivity.kt
+
+* **Call < Type >** :  싱글톤 객체를 통해 비동기적으로 Call 객체를 받아옵니다.
+* **Callback < Type >** :  Type 객체를 받아왔을 때 프로그래머의 행동입니다.
+* `onFailure()`에는 통신이 실패했을 때 호출되고, 통신이 성공했다면 `onResponse()`가 호출됩니다. 
+
+```kotlin
+val call : Call<ResponseSignUpData> = SoptServiceImpl.service.postSignUp(
+	RequestSignUpData(email = email, password = password, userName = userName)
+)
+call.enqueue(object : Callback<ResponseSignUpData>{
+	override fun onFailure(call: Call<ResponseSignUpData>, t: Throwable) {
+		Log.d("tag", t.localizedMessage)
+	}
+
+	override fun onResponse(
+        call: Call<ResponseSignUpData>, response:Response<ResponseSignUpData>
+    ) {
+		response.takeIf { it.isSuccessful }
+			?.body()
+			?.let { it ->
+                   
+			} ?: showError(response.errorBody())
+	}
+})
 ```
