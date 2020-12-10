@@ -8,8 +8,8 @@ fun BottomNavigationView.setBottomNavigationListener(viewPager: ViewPager) {
     this.setOnNavigationItemSelectedListener {
         when(it.itemId) {
             R.id.menu_profile -> viewPager.currentItem = 0
-            R.id.menu_recycler -> viewPager.currentItem = 1
-            R.id.menu_settings -> viewPager.currentItem = 2
+            R.id.menu_list -> viewPager.currentItem = 1
+            R.id.menu_search -> viewPager.currentItem = 2
         }
         true
     }

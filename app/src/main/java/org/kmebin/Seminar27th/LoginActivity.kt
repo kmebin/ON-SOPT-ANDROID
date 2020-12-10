@@ -43,7 +43,7 @@ class LoginActivity : AppCompatActivity() {
             val password = editText_pw.text.toString()
 
             // 로그인 통신
-            val call : Call<ResponseLoginData> = SoptServiceImpl.service.postLogin(
+            val call : Call<ResponseLoginData> = SoptServiceImpl.baseService.postLogin(
                     RequestLoginData(email = email, password = password)
             )
             call.enqueue(object : Callback<ResponseLoginData> {

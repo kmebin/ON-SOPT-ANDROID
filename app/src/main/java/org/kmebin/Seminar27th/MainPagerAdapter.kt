@@ -4,8 +4,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import org.kmebin.Seminar27th.fragment.HomeFragment
-import org.kmebin.Seminar27th.fragment.ProfileFragment
-import org.kmebin.Seminar27th.fragment.SettingsFragment
+import org.kmebin.Seminar27th.fragment.ListFragment
+import org.kmebin.Seminar27th.fragment.SearchFragment
 
 class MainPagerAdapter(fm: FragmentManager)
     : FragmentStatePagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
@@ -14,8 +14,8 @@ class MainPagerAdapter(fm: FragmentManager)
 
     override fun getItem(position: Int): Fragment = when(position){
         0 -> HomeFragment()
-        1 -> ProfileFragment()
-        2 -> SettingsFragment()
+        1 -> ListFragment()
+        2 -> SearchFragment()
         else -> throw IllegalStateException("Unexpected position $position")
     }
 

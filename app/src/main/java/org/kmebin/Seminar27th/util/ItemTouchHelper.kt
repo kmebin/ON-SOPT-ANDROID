@@ -1,9 +1,9 @@
 package org.kmebin.Seminar27th.util
 
 import androidx.recyclerview.widget.ItemTouchHelper
-import org.kmebin.Seminar27th.recycler.ProfileAdapter
+import org.kmebin.Seminar27th.recycler.ListAdapter
 
-fun itemTouchHelper(adapter : ProfileAdapter) : ItemTouchHelper {
+fun itemTouchHelper(adapter : ListAdapter) : ItemTouchHelper {
 
     val helper = ItemTouchHelper(object :
         ItemTouchHelper.SimpleCallback(

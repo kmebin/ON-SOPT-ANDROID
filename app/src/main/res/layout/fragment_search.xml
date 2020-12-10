@@ -4,4 +4,4 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#9E9E9E"
-    tools:context=".fragment.SettingsFragment"/>
+    tools:context=".fragment.SearchFragment"/>

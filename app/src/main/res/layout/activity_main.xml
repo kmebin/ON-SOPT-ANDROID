@@ -17,11 +17,11 @@
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navi"
+        android:theme="@style/Widget.BottomNavigationView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="#000000"
+        android:background="@color/black"
         app:itemIconTint="@color/bottom_navi_color"
-        app:itemRippleColor="#F3EBAB"
         app:itemTextColor="@color/bottom_navi_color"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

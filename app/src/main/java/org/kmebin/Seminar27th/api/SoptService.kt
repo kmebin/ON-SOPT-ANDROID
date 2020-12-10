@@ -1,13 +1,8 @@
 package org.kmebin.Seminar27th.api
 
-import org.kmebin.Seminar27th.data.RequestLoginData
-import org.kmebin.Seminar27th.data.RequestSignUpData
-import org.kmebin.Seminar27th.data.ResponseLoginData
-import org.kmebin.Seminar27th.data.ResponseSignUpData
+import org.kmebin.Seminar27th.data.*
 import retrofit2.Call
-import retrofit2.http.Body
-import retrofit2.http.Headers
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface SoptService {
     // 회원가입
@@ -23,4 +18,11 @@ interface SoptService {
     fun postLogin(
         @Body body : RequestLoginData
     ) : Call<ResponseLoginData>
+
+    // 더미데이터
+    @Headers("Content-Type: application/json")
+    @GET("/api/users")
+    fun getDummy(
+        @Query("page") page : Int
+    ) : Call<ResponseDummyData>
 }

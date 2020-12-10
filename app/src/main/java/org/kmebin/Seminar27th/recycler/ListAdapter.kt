@@ -6,21 +6,21 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import org.kmebin.Seminar27th.ProfileDetailActivity
 import org.kmebin.Seminar27th.R
-import org.kmebin.Seminar27th.data.ProfileData
+import org.kmebin.Seminar27th.data.ListData
 
-class ProfileAdapter (private val context : Context) : androidx.recyclerview.widget.RecyclerView.Adapter<ProfileViewHolder>(){
-    var data = mutableListOf<ProfileData>()
+class ListAdapter (private val context : Context) : androidx.recyclerview.widget.RecyclerView.Adapter<ListViewHolder>(){
+    var data = mutableListOf<ListData>()
     var layoutItem = R.layout.profile_item_linear
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProfileViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
 
         val view = LayoutInflater.from(context).inflate(layoutItem, parent, false)
 
-        return ProfileViewHolder(view).apply {
+        return ListViewHolder(view).apply {
             // item을 클릭하면 상세 화면으로 이동
             itemView.setOnClickListener {
                 val curPosition : Int = adapterPosition
-                val profile : ProfileData = data.get(curPosition)
+                val profile : ListData = data.get(curPosition)
                 val intent = Intent(context, ProfileDetailActivity::class.java)
 
                 intent.putExtra("profile", profile)
@@ -31,7 +31,7 @@ class ProfileAdapter (private val context : Context) : androidx.recyclerview.wid
 
     override fun getItemCount(): Int = data.size
 
-    override fun onBindViewHolder(holder: ProfileViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
         holder.onBind(data[position])
     }
 

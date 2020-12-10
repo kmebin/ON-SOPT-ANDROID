@@ -41,7 +41,7 @@ class SignUpActivity : AppCompatActivity() {
             }
 
             // 회원가입 통신
-            val call : Call<ResponseSignUpData> = SoptServiceImpl.service.postSignUp(
+            val call : Call<ResponseSignUpData> = SoptServiceImpl.baseService.postSignUp(
                     RequestSignUpData(email = email, password = password, userName = userName)
             )
             call.enqueue(object : Callback<ResponseSignUpData>{

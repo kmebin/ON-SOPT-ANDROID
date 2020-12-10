@@ -4,8 +4,8 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class ProfileData(
-    val title : String,
-    val subTitle : String,
-    val contents : String
+data class ListData(
+    val firstName: String,
+    val email: String,
+    val avatar: String
 ) : Parcelable
