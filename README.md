@@ -713,6 +713,7 @@ data class RequestSignUpData(
 )
 ```
 </br>
+
 > RequestLoginData.kt 
 
 * 로그인 Request 객체를 생성합니다.
@@ -724,6 +725,7 @@ data class RequestLoginData(
 )
 ```
 </br>
+
 > ResponseSignUpData.kt 
 
 * 회원가입 Response 객체를 생성합니다.
@@ -743,6 +745,7 @@ data class ResponseSignUpData(
 }
 ```
 </br>
+
 > ResponseLoginData.kt
 
 * 로그인 Response 객체를 생성합니다.
@@ -816,6 +819,7 @@ data class ResponseKakaoData(
 }
 ```
 </br>
+
 > SoptServiceImpl.kt
 
 * Retrofit Interface의 **실제 구현체**는 하나만 생성하여 프로젝트 어디서나 사용할 수 있도록 **싱글톤**으로 만들어줍니다.
@@ -853,6 +857,7 @@ object SoptServiceImpl {
 }
 ```
 </br>
+
 > SignUpActivity.kt
 
 * **Call < Type >** :  싱글톤 객체를 통해 비동기적으로 Call 객체를 받아옵니다.
