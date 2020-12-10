@@ -23,7 +23,7 @@ object SoptServiceImpl {
     val dummyService : SoptService = dummyRetrofit.create(SoptService::class.java)
 
     private val kakaoRetrofit : Retrofit = Retrofit.Builder()
-            .baseUrl(DUMMY_URL)
+            .baseUrl(KAKAO_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 

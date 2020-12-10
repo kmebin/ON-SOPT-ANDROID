@@ -10,7 +10,7 @@ import org.kmebin.Seminar27th.data.ListData
 
 class ListAdapter (private val context : Context) : androidx.recyclerview.widget.RecyclerView.Adapter<ListViewHolder>(){
     var data = mutableListOf<ListData>()
-    var layoutItem = R.layout.profile_item_linear
+    var layoutItem = R.layout.item_list_linear
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
 

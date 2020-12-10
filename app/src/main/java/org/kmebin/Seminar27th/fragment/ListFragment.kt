@@ -38,8 +38,8 @@ class ListFragment : Fragment() {
 
         listAdapter = ListAdapter(view.context)
 
-        rv.adapter = listAdapter
-        rv.layoutManager = LinearLayoutManager(view.context, LinearLayoutManager.VERTICAL, false)
+        rv_list.adapter = listAdapter
+        rv_list.layoutManager = LinearLayoutManager(view.context, LinearLayoutManager.VERTICAL, false)
 
         // 더미데이터 통신
         val call: Call<ResponseDummyData> = SoptServiceImpl.dummyService.getDummy(page = 2)
@@ -54,31 +54,11 @@ class ListFragment : Fragment() {
                 response.takeIf{ it.isSuccessful }
                     ?.body()
                     ?.let{
-                        listAdapter.data = mutableListOf(
-                                ListData(
-                                        it.data[0].first_name,it.data[0].email,it.data[0].avatar
-                                ),
-                                ListData(
-                                        it.data[1].first_name,it.data[1].email,it.data[1].avatar
-                                ),
-                                ListData(
-                                        it.data[2].first_name,it.data[2].email,it.data[2].avatar
-                                ),
-                                ListData(
-                                        it.data[3].first_name,it.data[3].email,it.data[3].avatar
-                                ),
-                                ListData(
-                                        it.data[4].first_name,it.data[4].email,it.data[4].avatar
-                                ),
-                                ListData(
-                                        it.data[5].first_name,it.data[5].email,it.data[5].avatar
-                                )
-                        )
-//                        for (i in 0 until it.data.size){
-//                            listAdapter.data = mutableListOf(
-//                                ListData(it.data[i].first_name, it.data[i].email, it.data[i].avatar)
-//                            )
-//                        }
+                        for (i in it.data.indices){
+                            listAdapter.data.add(
+                                ListData(it.data[i].first_name, it.data[i].email, it.data[i].avatar)
+                            )
+                        }
                         listAdapter.notifyDataSetChanged()
                     } ?: showError(response.errorBody())
             }
@@ -103,7 +83,7 @@ class ListFragment : Fragment() {
 
         // ItemTouchHelper로 아이템의 이동 및 삭제
         val helper : ItemTouchHelper = itemTouchHelper(listAdapter)
-        helper.attachToRecyclerView(rv)
+        helper.attachToRecyclerView(rv_list)
 
         super.onViewCreated(view, savedInstanceState)
     }
@@ -119,19 +99,19 @@ class ListFragment : Fragment() {
 
         when(item.itemId) {
             R.id.linear -> {
-                listAdapter.changeLayout(R.layout.profile_item_linear)
-                rv.apply {
-                    rv.adapter = listAdapter
-                    rv.layoutManager =
+                listAdapter.changeLayout(R.layout.item_list_linear)
+                rv_list.apply {
+                    rv_list.adapter = listAdapter
+                    rv_list.layoutManager =
                         androidx.recyclerview.widget.LinearLayoutManager(view?.context)
                 }
                 return true
             }
             R.id.grid -> {
-                listAdapter.changeLayout(R.layout.profile_item_grid)
-                rv.apply {
-                    rv.adapter = listAdapter
-                    rv.layoutManager =
+                listAdapter.changeLayout(R.layout.item_list_grid)
+                rv_list.apply {
+                    rv_list.adapter = listAdapter
+                    rv_list.layoutManager =
                         androidx.recyclerview.widget.GridLayoutManager(view?.context, 2)
                 }
                 return true

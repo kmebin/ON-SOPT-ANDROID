@@ -25,4 +25,11 @@ interface SoptService {
     fun getDummy(
         @Query("page") page : Int
     ) : Call<ResponseDummyData>
+
+    // 카카오 웹 검색
+    @Headers("Authorization: KakaoAK 40413dea0470321441d02b60a8f7ad8c")
+    @GET("/v2/search/web")
+    fun getWebSearch(
+        @Query("query") web : String
+    ):Call<ResponseKakaoData>
 }
