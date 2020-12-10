@@ -648,6 +648,14 @@ class HomeFragment : Fragment() {
 
 </br>
 
+> :computer: **성장 과제 1, 2 (2020-12-10)**
+
+* 더미데이터/카카오 웹 검색
+
+<img width="300" alt="6th_gif" src="https://user-images.githubusercontent.com/72112845/101776672-a48d6480-3b34-11eb-914b-0a7257a3f554.gif">
+
+</br>
+
 ## :memo: 코드 설명
 
 :bulb: **Retrofit2**
@@ -656,7 +664,8 @@ class HomeFragment : Fragment() {
 
 * 식별 URL을 **Interface**로 설계합니다.
 
-* Http method 종류가 **POST** 이므로, `@Body` 를 통해 **RequestBody**를 설정하고, return 값으로는 **Response 객체**를 주었습니다.
+* Http method 종류가 **POST** 이면, `@Body` 를 통해 **RequestBody**를 설정하고, return 값으로는 **Response 객체**를 줍니다.
+* 서버에 데이터를 단순 요구할 때는 **GET** 방식을 사용하며, 쿼리 매개변수를 사용할 경우에는 `@Query`로 표현합니다.
 
 ```kotlin
 interface SoptService {
@@ -673,6 +682,20 @@ interface SoptService {
     fun postLogin(
         @Body body : RequestLoginData
     ) : Call<ResponseLoginData>
+    
+    // 더미데이터
+    @Headers("Content-Type: application/json")
+    @GET("/api/users")
+    fun getDummy(
+        @Query("page") page : Int
+    ) : Call<ResponseDummyData>
+
+    // 카카오 웹 검색
+    @Headers("Authorization: KakaoAK {RSET_API_KEY}")
+    @GET("/v2/search/web")
+    fun getWebSearch(
+        @Query("query") web : String
+    ):Call<ResponseKakaoData>
 }
 ```
 
@@ -739,24 +762,94 @@ data class ResponseLoginData(
 }
 ```
 </br>
+
+> ResponseDummyData.kt
+
+* 더미데이터 Response 객체를 생성합니다.
+
+```kotlin
+data class ResponseDummyData(
+    val page: Int,
+    val per_page: Int,
+    val total: Int,
+    val total_pages: Int,
+    val data: List<DummyData>,
+    val support: Support
+){
+    data class DummyData(
+        val id: Int,
+        val email: String,
+        val first_name: String,
+        val last_name: String,
+        val avatar: String
+    )
+
+    data class Support(
+        val url: String,
+        val text: String
+    )
+}
+```
+</br>
+
+> ResponseKakaoData.kt
+
+* 카카오 웹 검색 Response 객체를 생성합니다.
+
+```kotlin
+data class ResponseKakaoData(
+	val meta: Meta,
+	val documents: List<Document>
+){
+	data class Meta(
+		val total_count: Int,
+		val pageable_count: Int,
+		val is_end: Boolean
+	)
+
+	data class Document(
+		val datetime: String,
+		val contents: String,
+		val title: String,
+		val url: String
+	)
+}
+```
+</br>
 > SoptServiceImpl.kt
 
 * Retrofit Interface의 **실제 구현체**는 하나만 생성하여 프로젝트 어디서나 사용할 수 있도록 **싱글톤**으로 만들어줍니다.
 * 싱글톤 객체로 사용하기 위해 `object`로 선언합니다.
-* 메인 서버 URL을 담을 변수 `BASE_URL`을 생성해 줍니다.
+* 메인 서버 URL을 담을 변수들을 생성해 줍니다.
 * Retrofit 객체 `retrofit`을 생성해 줍니다.
 * **Interface 객체**를 넘겨 실제 구현체를 생성해 줍니다.
 
 ```kotlin
 object SoptServiceImpl {
     private const val BASE_URL = "http://15.164.83.210:3000"
+    private const val DUMMY_URL = "https://reqres.in"
+    private const val KAKAO_URL = "https://dapi.kakao.com"
 
-    private val retrofit : Retrofit = Retrofit.Builder()
+    private val baseRetrofit : Retrofit = Retrofit.Builder()
         .baseUrl(BASE_URL)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
-    val service : SoptService = retrofit.create(SoptService::class.java)
+    val baseService : SoptService = baseRetrofit.create(SoptService::class.java)
+
+    private val dummyRetrofit : Retrofit = Retrofit.Builder()
+        .baseUrl(DUMMY_URL)
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
+
+    val dummyService : SoptService = dummyRetrofit.create(SoptService::class.java)
+
+    private val kakaoRetrofit : Retrofit = Retrofit.Builder()
+            .baseUrl(KAKAO_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+    val kakaoService : SoptService = kakaoRetrofit.create(SoptService::class.java)
 }
 ```
 </br>
